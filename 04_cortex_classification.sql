@@ -7,11 +7,11 @@ SELECT
     TIMESTAMP,
     NOTES,
     --
-    -- THE FIX: Swapped 'snowflake-arctic' for 'llama3-8b', 
-    -- which is available in all regions.
+    -- THE FIX (V3): 'llama3-8b' was also unavailable.
+    -- Trying 'mixtral-8x7b' as the next most likely available model.
     --
     SNOWFLAKE.CORTEX.COMPLETE(
-        'llama3-8b',
+        'mixtral-8x7b',
         CONCAT(
             'Classify the following lifestyle note into one category: EATING, EXERCISE, SLEEP, MEDICATION, ALCOHOL, STRESS, or OTHER. Respond with only the category name.\n',
             'Note: "', NOTES, '"\n',
