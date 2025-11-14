@@ -6,10 +6,12 @@ CREATE OR REPLACE TABLE CLASSIFIED_NOTES AS
 SELECT
     TIMESTAMP,
     NOTES,
-    -- Call Cortex AI. We use 'snowflake-arctic', a fast, efficient model.
-    -- This prompt forces it to choose from one of our categories.
+    --
+    -- THE FIX: Swapped 'snowflake-arctic' for 'llama3-8b', 
+    -- which is available in all regions.
+    --
     SNOWFLAKE.CORTEX.COMPLETE(
-        'snowflake-arctic',
+        'llama3-8b',
         CONCAT(
             'Classify the following lifestyle note into one category: EATING, EXERCISE, SLEEP, MEDICATION, ALCOHOL, STRESS, or OTHER. Respond with only the category name.\n',
             'Note: "', NOTES, '"\n',
@@ -17,7 +19,7 @@ SELECT
         )
     ) AS LIFESTYLE_CATEGORY
 FROM
-    RAW_READINGS
+    CGM_HEALTH.ANALYTICS.RAW_READINGS
 WHERE
     NOTES IS NOT NULL AND NOTES != ''; -- Only run on rows that have notes
 
