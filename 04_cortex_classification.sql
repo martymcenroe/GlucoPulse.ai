@@ -6,10 +6,7 @@ CREATE OR REPLACE TABLE CLASSIFIED_NOTES AS
 SELECT
     TIMESTAMP,
     NOTES,
-    --
-    -- THE FIX (V3): 'llama3-8b' was also unavailable.
-    -- Trying 'mixtral-8x7b' as the next most likely available model.
-    --
+    -- We'll use mixtral, as it's a solid, available model.
     SNOWFLAKE.CORTEX.COMPLETE(
         'mixtral-8x7b',
         CONCAT(
